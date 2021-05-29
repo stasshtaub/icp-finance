@@ -5,6 +5,13 @@ module.exports = {
 
   plugins: [
     ["@babel/proposal-decorators", { legacy: true }],
-    ["@babel/proposal-class-properties", { loose: true }]
+    ["@babel/proposal-class-properties", { loose: true }],
+    [
+      "component",
+      {
+        libraryName: "element-ui",
+        styleLibraryName: "theme-chalk"
+      }
+    ]
   ]
 }

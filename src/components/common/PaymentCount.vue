@@ -57,7 +57,7 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
-import { mapFields } from "@vasiliyrusin/vue-mapfields";
+import { mapFields } from "@/plugins/mapFields";
 import { UPDATE_PAYMENT_MODEL } from "@/constants/mutations";
 import { CALC_PAYMENT_COUNT, CALC_PAYMENT_PER_PAYMENT } from "@/constants/actions";
 import CustomPlaceholder from './CustomPlaceholder.vue';

@@ -14,7 +14,7 @@
 
 <script>
 import { mapState } from "vuex";
-import { mapFields } from "@vasiliyrusin/vue-mapfields";
+import { mapFields } from "@/plugins/mapFields";
 import { UPDATE_PAYMENT_MODEL } from "@/constants/mutations";
 import { UpdateData } from "@/mixins/updateData";
 import FullPaymentTab from "./PaymentSettings/FullPaymentTab.vue";

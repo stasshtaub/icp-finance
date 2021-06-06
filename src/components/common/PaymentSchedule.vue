@@ -24,7 +24,7 @@
 <script>
 import PyamentDay from "./PyamentDay.vue";
 import { mapActions, mapGetters, mapState } from "vuex";
-import { mapFields } from "@vasiliyrusin/vue-mapfields";
+import { mapFields } from "@/plugins/mapFields";
 import { UPDATE_PAYMENT_MODEL, UPDATE_PAYMENT_SCHEDULE_DAY } from '@/constants/mutations';
 
 export default {

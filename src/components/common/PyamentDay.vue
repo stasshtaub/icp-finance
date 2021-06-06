@@ -1,15 +1,17 @@
 <template>
   <el-row class="payment-day" :gutter="12">
-    <el-col :span="6">
+    <el-col :span="8">
       <el-form-item>
         <el-input
           v-model.number="_payment"
-          placeholder="Введите сумму">
+          placeholder="Введите сумму"
+          :min="0"
+          :disabled="disabledPayment">
           <span slot="suffix">Р</span>
         </el-input>
       </el-form-item>
     </el-col>
-    <el-col :span="5">
+    <el-col :span="8">
       <el-form-item>
         <el-date-picker
           v-model="_date"
@@ -28,12 +30,27 @@ export default {
   props: {
     date: {
       type: Date,
-      required: true
+      default: null
     },
 
     payment: {
       type: Number,
-      required: true
+      default: null
+    },
+
+    disabledPayment: {
+      type: Boolean,
+      default: false
+    },
+
+    lastPayment: {
+      type: Number,
+      default: null
+    },
+
+    totalPayment: {
+      type: Number,
+      default: null
     }
   },
 
@@ -53,7 +70,7 @@ export default {
         return this.payment
       },
 
-      set(value) {
+      set(value) {        
         this.$emit("update:payment", value)
       }
     }

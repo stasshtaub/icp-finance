@@ -1,21 +1,31 @@
 <template>
-  <el-form class="payment-schedule">
+  <div class="payment-schedule">
+    <h4>График платежей</h4>
     <ol class="payment-schedule__list">
       <li class="payment-schedule__item" :key="i" v-for="(_, i) in schedule">
         <PyamentDay
           :date.sync="schedule[i].date"
           :payment.sync="schedule[i].payment"
+          :last-payment="lastPayment"
+          :total-payment="paymentAmount"
           @update:date="updateDate($event, i)"
           @update:payment="updatePayment($event, i)" />
       </li>
+      <li class="payment-schedule__item">
+        <PyamentDay
+          :date.sync="lastPaymentDate"
+          :payment="lastPayment"
+          disabled-payment />
+      </li>
     </ol>
-  </el-form>
+  </div>
 </template>
 
 <script>
 import PyamentDay from "./PyamentDay.vue";
-import { mapMutations, mapState } from "vuex";
-import { UPDATE_PAYMENT_SCHEDULE_DAY } from '@/constants/mutations';
+import { mapActions, mapGetters, mapState } from "vuex";
+import { mapFields } from "@vasiliyrusin/vue-mapfields";
+import { UPDATE_PAYMENT_MODEL, UPDATE_PAYMENT_SCHEDULE_DAY } from '@/constants/mutations';
 
 export default {
   name: "PaymentSchedule",
@@ -23,13 +33,25 @@ export default {
   components: { PyamentDay },
 
   computed: {
+    ...mapFields("payment", {
+      fields: ["lastPaymentDate"],
+      base: "model",
+      action: UPDATE_PAYMENT_MODEL
+    }),
+
     ...mapState("payment", {
       schedule: (state) => state.model.schedule
-    })
+    }),
+
+    ...mapState("user", {
+      paymentAmount: (state) => state.data.paymentAmount
+    }),
+
+    ...mapGetters("payment", ["lastPayment"])
   },
 
   methods: {
-    ...mapMutations("payment", [UPDATE_PAYMENT_SCHEDULE_DAY]),
+    ...mapActions("payment", [UPDATE_PAYMENT_SCHEDULE_DAY]),
 
     updateDate(date, index) {
       this.UPDATE_PAYMENT_SCHEDULE_DAY({ index, day: { date } })
@@ -37,6 +59,10 @@ export default {
 
     updatePayment(payment, index) {
       this.UPDATE_PAYMENT_SCHEDULE_DAY({ index, day: { payment } })
+    },
+
+    isPaymentDisabled(index) {
+      return index === this.schedule.length - 1;
     }
   }
 };
